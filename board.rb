@@ -15,6 +15,7 @@ class Board
   end
 
   def find_coord(x, y)
+    return unless x >= 0 && y >= 0
     return unless @ordered_coords[y]
     @ordered_coords[y][x]
   end

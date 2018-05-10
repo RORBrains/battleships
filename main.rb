@@ -35,7 +35,7 @@ while user.ships_left_to_build > 0
   coord = user.choose_next_coord(current_ship)
 
   # 7. Validate coordinate: not nil, empty, no ships around
-  if coord && coord.available?
+  if coord && coord.available?(current_ship)
     current_ship << coord
     if current_ship.complete?
       user.ships << current_ship

@@ -13,8 +13,10 @@ class Coord
     @state = EMPTY
   end
 
-  def available?
-    empty? && coords_around.all? { |c| c.empty? || c.ship == ship }
+  def available?(ship = nil)
+    empty? && coords_around.all? do |c|
+      c.empty? || c.ship == ship
+    end
   end
 
   def coords_around
