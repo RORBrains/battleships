@@ -42,4 +42,12 @@ module Messages
     mode = options[:mode] == :m ? "a Manual" : "an Automatic"
     puts "You have selected #{mode} placement mode!"
   end
+
+  def message_intro(_options = {})
+    "\n#{message(:intro_line)}\n#{" " * 14}Battleships v1.0\n#{message(:intro_line)}\n"
+  end
+
+  def message_intro_line(_options = {})
+    "=" * 45
+  end
 end

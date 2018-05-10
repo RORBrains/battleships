@@ -14,7 +14,16 @@ class Coord
   end
 
   def available?
-    empty?
+    empty? && coords_around.all? { |c| c.empty? || c.ship == ship }
+  end
+
+  def coords_around
+    coords = []
+    coords << @board.find_coord(@x + 1, @y)
+    coords << @board.find_coord(@x - 1, @y)
+    coords << @board.find_coord(@x, @y + 1)
+    coords << @board.find_coord(@x, @y - 1)
+    coords.compact.uniq
   end
 
   def empty?
