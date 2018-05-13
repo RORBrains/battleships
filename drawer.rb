@@ -1,8 +1,8 @@
 class Drawer
   attr_accessor :strategy
 
-  def initialize(strategy_name, board)
-    @strategy = load_strategy_class(strategy_name).new(board)
+  def initialize(strategy_name, board, options = {})
+    @strategy = load_strategy_class(strategy_name).new(board, options)
   end
 
   def call(coord, idx)

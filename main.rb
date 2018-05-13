@@ -49,40 +49,12 @@ while user.ships_left_to_build > 0
   board.draw
 end
 
-board2 = Board.new(10, 10)
-board2.drawer = Drawer.new(:console, board)
-user2 = User.new(board2)
-
 ## BOARD #2: Hit ships
-puts "Hit all enemies ships!"
-while user.ships_left?
-  board2.draw
+board2 = Board.new(10, 10)
+user2 = User.new(board2)
+gtk_drawer = Drawer.new(:gtk3, board2, orig_board: board, user: user)
+board2.drawer = gtk_drawer
 
-  puts "Ships left: #{user.ships_left}"
-
-  print message(:x_coord_shoot)
-  x_coord = gets.chomp.to_i
-
-  print message(:y_coord_shoot)
-  y_coord = gets.chomp.to_i
-
-  coord = board.find_coord(x_coord - 1, y_coord - 1)
-  unless coord
-    puts message(:not_available, x: x_coord, y: y_coord)
-    next
-  end
-
-  # Mark as damaged on both boards
-  if coord.intact?
-    board.find_coord(coord.x, coord.y).damage
-    board2.find_coord(coord.x, coord.y).damage
-  end
-
-  # Mark as bypassed on both boards
-  if coord.empty?
-    board.find_coord(coord.x, coord.y).bypass
-    board2.find_coord(coord.x, coord.y).bypass
-  end
-end
+board2.draw
 
 puts "GAME OVER!"

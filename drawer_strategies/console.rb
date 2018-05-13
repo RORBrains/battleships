@@ -8,7 +8,7 @@ module DrawerStrategies
 
     attr_reader :board
 
-    def initialize(board)
+    def initialize(board, _options = {})
       @board = board
     end
 

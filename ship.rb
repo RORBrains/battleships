@@ -4,8 +4,7 @@ class Ship
   class << self
     def how_many_ships(length)
       case length
-      when 4 then 1
-      when 3 then 2
+      when 4 then 1 when 3 then 2
       when 2 then 3
       when 1 then 4
       else 0
