@@ -6,12 +6,29 @@ module DrawerStrategies
     attr_reader :board, :app, :window, :grid, :orig_board
 
     def initialize(board, options = {})
-      @board = board
-      @app = Gtk::Application.new("org.gtk.example", :flags_none)
-      @grid = Gtk::Grid.new
-      @orig_board = options[:orig_board]
-      @user = options[:user]
+      @board      = board
+      @orig_board = options[:orig_board] # user1 boar
+      @user       = options[:user] # user
+      initialize_app
+    end
 
+    def call(coord, idx)
+      button = Gtk::Button.new(label: draw_state(coord.state))
+
+      button.signal_connect("clicked") do |button|
+        button_callback(button, coord)
+      end
+
+      @grid.attach(button, coord.x, coord.y, 1, 1)
+
+      draw_last_line(idx)
+    end
+
+    private
+
+    def initialize_app
+      @app        = Gtk::Application.new("org.gtk.example", :flags_none)
+      @grid       = Gtk::Grid.new
       @app.signal_connect "activate" do |application|
         window = Gtk::ApplicationWindow.new(application)
         window.set_title("Window")
@@ -19,17 +36,6 @@ module DrawerStrategies
         window.add(@grid)
         window.show_all
       end
-    end
-
-    def call(coord, idx)
-      button = Gtk::Button.new(:label => draw_state(coord.state))
-
-      button.signal_connect("clicked") do |button|
-        button_callback(button, coord)
-      end
-
-      @grid.attach(button, coord.x, coord.y, 1, 1)
-      draw_last_line(idx)
     end
 
     def button_callback(button, coord)
