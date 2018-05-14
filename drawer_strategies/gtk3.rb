@@ -1,7 +1,9 @@
+require "./drawer_strategies/line_aware"
 require "gtk3"
 
 module DrawerStrategies
   class Gtk3
+    include LineAware
 
     attr_reader :board, :app, :window, :grid, :orig_board
 
@@ -77,37 +79,10 @@ module DrawerStrategies
       end
     end
 
-    def draw_first_line(idx)
-      return unless first_line?(idx) && beginning_of_line?(idx)
-      puts
-      puts horizontal_legend
-      puts horizontal_line
-    end
-
     def draw_last_line(idx)
       return unless end_of_line?(idx) && last_line?(idx)
       status = @app.run([$0] + ARGV)
       puts status
-    end
-
-    def first_line?(idx)
-      idx < board.width
-    end
-
-    def last_line?(idx)
-      idx >= last_line_first_coord
-    end
-
-    def beginning_of_line?(idx)
-      (idx % board.width).zero?
-    end
-
-    def end_of_line?(idx)
-      ((idx + 1) % board.width).zero?
-    end
-
-    def last_line_first_coord
-      @_last_line_first_coord ||= (board.size - board.width)
     end
   end
 end

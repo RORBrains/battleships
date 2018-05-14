@@ -1,5 +1,9 @@
+require "./drawer_strategies/line_aware"
+
 module DrawerStrategies
   class Console
+    include LineAware
+
     CHAR_WIDTH = 3
     BORDER_WIDTH = 1
     LEGEND_WIDTH = 3
@@ -67,26 +71,6 @@ module DrawerStrategies
 
     def legend_indent
       @_legend_indent ||= " " * LEGEND_WIDTH
-    end
-
-    def first_line?(idx)
-      idx < board.width
-    end
-
-    def last_line?(idx)
-      idx >= last_line_first_coord
-    end
-
-    def beginning_of_line?(idx)
-      (idx % board.width).zero?
-    end
-
-    def end_of_line?(idx)
-      ((idx + 1) % board.width).zero?
-    end
-
-    def last_line_first_coord
-      @_last_line_first_coord ||= (board.size - board.width)
     end
   end
 end
